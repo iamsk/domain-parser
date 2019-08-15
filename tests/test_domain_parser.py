@@ -3,12 +3,22 @@ import unittest
 
 from domain_parser import domain_parser
 
-class DomainParserTestCase(unittest.TestCase):
 
+class DomainParserTestCase(unittest.TestCase):
     def test_google(self):
         """Is google.com properly parsed?"""
         assert domain_parser.parse_domain(
                 'http://www.google.com') == ('com', 'google', 'www')
+
+    @staticmethod
+    def test_no_subdomain():
+        """Is twitter.com properly parsed?"""
+        assert domain_parser.parse_domain('twitter.com') == ('com', 'twitter', '')
+
+    @staticmethod
+    def test_more_levels():
+        """Is two levels sub-domain properly parsed?"""
+        assert domain_parser.parse_domain('www.staging.google.com') == ('com', 'google', 'www.staging')
 
     def test_guardian(self):
         """Is 'co.uk', which is wildcarded in the TLD list, parsed properly?"""

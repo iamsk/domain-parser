@@ -15,6 +15,7 @@ except ImportError:
 
 TLD_URL = 'https://publicsuffix.org/list/effective_tld_names.dat'
 
+
 def get_tlds():
     """Return a list of top-level domains as maintained by Mozilla and
     publicsuffix.org."""
@@ -43,6 +44,7 @@ def get_tlds():
 
     return tlds
 
+
 @pylru.lrudecorator(10000)
 def parse_domain(url, encoding='utf-8'):
     """Return a tuple containing any subdomains, the second-level domain, and
@@ -59,8 +61,7 @@ def parse_domain(url, encoding='utf-8'):
     if not (url.startswith('http://') or url.startswith('https://')):
         url = 'http://' + url
     parsed = urlparse(url.lower())
-    hostname = (parsed.netloc if python_version else
-        parsed.netloc.decode('utf-8'))
+    hostname = (parsed.netloc if python_version else parsed.netloc.decode('utf-8'))
 
     tld = ''
     tld_index = 0
